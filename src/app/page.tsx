@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase'
 import { addNote } from './actions'
+import NoteCard from './NoteCard'
 
 export default async function Home() {
   const { data: notes, error } = await supabase
@@ -32,12 +33,7 @@ export default async function Home() {
 
       <h2>Your Notes</h2>
       {notes && notes.length === 0 && <p>No notes yet — add your first one above.</p>}
-      {notes && notes.map((note) => (
-        <div key={note.id} style={{ border: '1px solid #ccc', padding: 12, marginBottom: 12, borderRadius: 8 }}>
-          <strong>{note.title}</strong> — <em>{note.category}</em> — {note.priority} — {note.status}
-          <p>{note.raw_text}</p>
-        </div>
-      ))}
+      {notes && notes.map((note) => <NoteCard key={note.id} note={note} />)}
     </div>
   )
 }
