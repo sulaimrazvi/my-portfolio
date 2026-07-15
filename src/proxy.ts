@@ -1,5 +1,5 @@
 export { default as proxy } from 'next-auth/middleware'
 
 export const config = {
-  matcher: ['/notes/:path*'],
+  matcher: ['/notes/:path*', '/admin/:path*'],
 }
