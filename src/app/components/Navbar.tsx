@@ -1,10 +1,40 @@
-export default function Navbar() {
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
+
+export default async function Navbar() {
+  const session = await getServerSession(authOptions)
+
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 border-b border-zinc-900 bg-black/80 backdrop-blur-sm">
       <div className="max-w-3xl mx-auto px-6 py-4 flex justify-between items-center">
         <span className="text-white font-mono text-sm tracking-wide">SULAIM RAZVI</span>
 
         <div className="flex gap-5 items-center">
+          <a
+            href="/"
+            className="text-zinc-400 hover:text-red-500 transition-colors text-sm font-mono"
+            aria-label="Home"
+          >
+            HOME
+          </a>
+          <a
+            href="/blog"
+            className="text-zinc-400 hover:text-red-500 transition-colors text-sm font-mono"
+            aria-label="Blog"
+          >
+            LOG
+          </a>
+
+          {session && (
+            <a
+              href="/admin"
+              className="text-red-500 hover:text-red-400 transition-colors text-sm font-mono"
+              aria-label="Dashboard"
+            >
+              DASHBOARD
+            </a>
+          )}
+
           <a
             href="/resume.pdf"
             target="_blank"
@@ -31,7 +61,7 @@ export default function Navbar() {
             </svg>
           </a>
           <a
-            href="https://www.linkedin.com/in/sulaim-razvi-b4b646251/"
+            href="https://linkedin.com/in/sulaim-razvi"
             target="_blank"
             rel="noopener noreferrer"
             className="text-zinc-400 hover:text-red-500 transition-colors"
