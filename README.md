@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# My Portfolio
 
-## Getting Started
+A personal portfolio and "second brain" system — built to showcase projects, log daily technical learning, and capture rough ideas that get automatically refined by AI.
 
-First, run the development server:
+**Live site:** [my-portfolio-ten-gold-64.vercel.app](https://my-portfolio-ten-gold-64.vercel.app)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## What it does
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Public portfolio** — projects, skills, and work experience, pulled live from a database (not hardcoded)
+- **Technical journal** (`/blog`) — a daily log of what I'm learning, shown as expandable date cards
+- **Private notes system** (`/notes`) — a personal idea-capture tool, protected behind GitHub OAuth login (only accessible to me)
+- **AI-powered refinement** — raw, messy notes are automatically rewritten into clear, structured text using the Gemini API the moment they're saved
+- **Dynamic skills tracking** — when a new project is added with a tech stack, any skill not already tracked gets automatically added to the public skills list — no manual syncing
+- **Admin dashboard** (`/admin`) — a private hub to add new projects and journal entries, visible only when logged in
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Framework:** Next.js (App Router, Server Actions)
+- **Database:** Supabase (PostgreSQL)
+- **Auth:** NextAuth.js with GitHub OAuth
+- **AI:** Google Gemini API
+- **Styling:** Tailwind CSS
+- **Deployment:** Vercel
 
-## Learn More
+## Why I built it this way
 
-To learn more about Next.js, take a look at the following resources:
+Most portfolio sites are static. This one is a real full-stack app — content is managed through actual admin forms backed by a live database, not by editing code and redeploying every time I want to add a project or write a journal entry. It's also genuinely useful day-to-day as a private thinking space, not just a public-facing showcase.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Status
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Actively maintained — new projects and journal entries are added regularly as I build and learn.
