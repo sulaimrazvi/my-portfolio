@@ -2,6 +2,9 @@
 
 import { supabase } from '@/lib/supabase'
 import { revalidatePath } from 'next/cache'
+import { GoogleGenerativeAI } from '@google/generative-ai'
+
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string)
 
 export async function addNote(formData: FormData) {
   const title = formData.get('title') as string
@@ -9,9 +12,12 @@ export async function addNote(formData: FormData) {
   const category = formData.get('category') as string
   const priority = formData.get('priority') as string
 
+  const refined_text = await generateRefinedText(raw_text)
+
   const { error } = await supabase.from('notes').insert({
     title,
     raw_text,
+    refined_text,
     category,
     priority,
     status: 'New',
@@ -40,10 +46,10 @@ export async function updateNote(id: number, formData: FormData) {
   const category = formData.get('category') as string
   const priority = formData.get('priority') as string
   const status = formData.get('status') as string
-
+  const refined_text = await generateRefinedText(raw_text)
   const { error } = await supabase
     .from('notes')
-    .update({ title, raw_text, category, priority, status })
+    .update({ title, raw_text, refined_text, category, priority, status })
     .eq('id', id)
 
   if (error) {
@@ -51,4 +57,25 @@ export async function updateNote(id: number, formData: FormData) {
   }
 
   revalidatePath('/')
+}
+
+
+
+
+async function generateRefinedText(rawText: string): Promise<string> {
+  const model = genAI.getGenerativeModel({ model: 'gemini-flash-latest' })
+  const prompt = `You are helping refine a rough project idea note into a clear, structured format.
+
+    Rewrite the following raw text into:
+    - A one-line summary of what it is
+    - Core features (bullet points)
+    - Future/stretch features (bullet points, if any mentioned)
+    - Any technical considerations mentioned
+
+    Keep it concise and skip generic headers like "Concept Overview." Just give the structured content directly.
+
+    Raw note:
+    ${rawText}`
+  const result = await model.generateContent(prompt)
+  return result.response.text()
 }

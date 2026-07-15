@@ -10,6 +10,7 @@ type Note = {
   category: string
   priority: string
   status: string
+  refined_text: string
 }
 
 export default function NoteCard({ note }: { note: Note }) {
@@ -32,7 +33,8 @@ export default function NoteCard({ note }: { note: Note }) {
       {!isEditing ? (
         <div>
           <strong>{note.title}</strong> — <em>{note.category}</em> — {note.priority} — {note.status}
-          <p>{note.raw_text}</p>
+          <p><b>Raw:</b> {note.raw_text}</p>
+          <p><b>Refined:</b> {note.refined_text}</p>
         </div>
       ) : (
         <form
